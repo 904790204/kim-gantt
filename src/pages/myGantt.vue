@@ -1,0 +1,34 @@
+<template>
+  <div class="my-gantt" id="my-gantt">
+
+  </div>
+</template>
+
+<script>
+import kimGantt from './kimGantt/index'
+export default {
+  data() {
+    return {
+      myGantt: null,
+      options: {
+        data: [
+          {id: 1, text: "鹿鸣*灵动", start_date: null, end_date: null, duration: null, parent:0, progress: 0, status: true, person:[{position:'pm',name:'kim'}]},
+          {id: 2, text: "v2.1.2 视频组件需求", start_date: '2019-10-29', end_date: '2019-11-12', duration: null, parent:0, progress: 1, status: true, person:[{position:'fe',name:'kim'},{position:'rd',name:'tom'}]},
+          {id: 2, text: "v2.1.2 视频组件需求", start_date: '2019-11-23', end_date: '2019-11-29', duration: null, parent:0, progress: 1, status: true, person:[]}
+        ]
+      }
+    }
+  },
+  mounted() {
+    this.myGantt = new kimGantt('#my-gantt',this.options)
+  }
+}
+</script>
+
+<style>
+.my-gantt{
+  width: 600px;
+  height: 400px;
+  margin: 0 auto;
+}
+</style>

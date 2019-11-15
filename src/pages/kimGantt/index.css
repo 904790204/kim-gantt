@@ -1,0 +1,26 @@
+.kim-gantt-background{
+  width: 100%;
+  height: 100%;
+  border: 1px solid #D2D1D1;
+}
+.kim-gantt-background-header rect{
+  fill: #b6ddfb;
+  stroke-width:1;
+  stroke: #b5b5bb;
+}
+.kim-gantt-background-header text{
+  fill: #ffffff;
+  font-size: 12px;
+}
+.kim-gantt-background-header .w rect{
+  fill: #eeeeee;
+}
+.kim-gantt-background-header .w text{
+  fill: #999999;
+}
+.kim-gantt-background-header .o rect{
+  fill: #ffffff;
+}
+.kim-gantt-background-header .o text{
+  fill: #999999;
+}
