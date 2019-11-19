@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-export default {
+const utils = {
   // 获取所有项目最早开始时间，最晚结束时间
   getMaxAndMinDate(arr,offset) {
     let start = dayjs()
@@ -23,5 +23,30 @@ export default {
   isWeek(day) {
     return day.day() === 0 || day.day() === 6
   },
+  // 数据代理
+  proxyData(target,data){
+    Object.keys(data).forEach(key=>{
+      Object.defineProperty(target,key,{
+        get(){
+            return data[key]
+        },
+        set(newValue){
+            data[key] = newValue
+        }
+      })
+    })
+  },
+  // 转树形
+  toTree(data,pid){
+    let arr = []
+    data.forEach(el => {
+      if(typeof pid === 'undefined' && !+el.pid || typeof pid !== 'undefined' && pid === el.pid){
+        el.children = utils.toTree(data, el.id)
+        arr.push(el)
+      }
+    })
+    return arr
+  },
   dayjs
 }
+export default utils

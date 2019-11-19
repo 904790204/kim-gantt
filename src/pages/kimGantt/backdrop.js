@@ -1,39 +1,10 @@
 import utils from './utils'
 class Backdrop {
-  constructor(el,data) {
+  constructor(el,data,params) {
     this.$el = el
     this.$data = data
-    this.backType = 'day'
-    this.duration = 0
-    this.firstDay = null
-    this.lastDay = null
-    this.startDay = null
-    this.endDay = null
-    this.boxWidth = null
-    this.boxHeight = null
-    this.middle = null
-    this.itemWidth = 30
-    this.itemHeight = 26
-    this.init()
-  }
-  init() {
-    this.firstDay = utils.dayjs()
-    this.lastDay = utils.dayjs()
-    this.startDay = utils.dayjs()
-    this.endDay = utils.dayjs()
-    this.middle = utils.dayjs()
-    this.boxWidth = this.$el.clientWidth
-    this.boxHeight = this.$el.clientHeight || this.itemHeight * (this.$data.length + 2) + 'px'
-    this.setData()
+    utils.proxyData(this,params)
     this.setTemplate()
-  }
-  setData() {
-    this.duration = this.boxWidth / this.itemWidth * 3
-    this.firstDay = utils.getMaxAndMinDate(this.$data,1).start
-    this.lastDay = utils.getMaxAndMinDate(this.$data,1).end
-    this.startDay = this.middle.add(-this.duration / 2, 'day')
-    this.endDay = this.middle.add(this.duration / 2, 'day')
-    
   }
   setTemplate() {
     let head = this.setHeader()
@@ -41,11 +12,11 @@ class Backdrop {
     let svgHeadBox = document.createElementNS('http://www.w3.org/2000/svg','svg');
     svgHeadBox.setAttribute('id','kim-gantt-background')
     svgHeadBox.setAttribute('class','kim-gantt-background')
-    svgHeadBox.style.height = this.boxHeight
+    svgHeadBox.style.height = this.boxHeight + 'px'
     svgHeadBox.innerHTML = `
                             <g transform="translate(${-this.boxWidth}, 0)" class="kim-gantt-background-container">
                               <g transform="translate(0, 0)" class="kim-gantt-background-header">${head}</g>
-                              <g transform="translate(0, ${this.itemHeight * 2})" class="kim-gantt-content-subaxis">${content}</g>
+                              <g transform="translate(0, ${this.topHeight * 2})" class="kim-gantt-content-subaxis">${content}</g>
                             </g>
                             `
     this.$el.appendChild(svgHeadBox)
@@ -64,15 +35,15 @@ class Backdrop {
         let l = (1 - text) * this.itemWidth + left
         arr.push(`
           <g transform="translate(${l}, 0)" class="o" >
-            <rect width="${w}" height="${this.itemHeight}"></rect>
-            <text dx="${w / 2 - 22}" dy="18">${m}</text>
+            <rect width="${w}" height="${this.topHeight}"></rect>
+            <text dx="${w / 2 - 22}" dy="14">${m}</text>
           </g>
         `)
       }
       arr.push(`
-        <g transform="translate(${left}, ${this.itemHeight})" class="${weekClass}" >
-          <rect width="${this.itemWidth}" height="${this.itemHeight}"></rect>
-          <text dx="${dx}" dy="18">${text}</text>
+        <g transform="translate(${left}, ${this.topHeight})" class="${weekClass}" >
+          <rect width="${this.itemWidth}" height="${this.topHeight}"></rect>
+          <text dx="${dx}" dy="14">${text}</text>
         </g>
       `)
     }
