@@ -6,6 +6,7 @@ class kimGantt {
   constructor(el,options){
     this.$el = document.querySelector(el)
     this.$data = options.data
+    this.$event = options.callback
     this.$params = {}
     this.init()
   }
@@ -34,10 +35,10 @@ class kimGantt {
     this.$params.endDay = this.$params.middle.add(this.$params.duration / 2, 'day')
   }
   setBackdrop() {
-    new Backdrop(this.$el,this.$data,this.$params)
+    new Backdrop(this.$el,this.$data,this.$params,this.$event)
   }
   setProgress() {
-    new Progress(this.$el,this.$data,this.$params)
+    new Progress(this.$el,this.$data,this.$params,this.$event)
   }
 }
 

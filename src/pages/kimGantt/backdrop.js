@@ -1,4 +1,5 @@
 import utils from './utils'
+import * as d3 from "d3"
 class Backdrop {
   constructor(el,data,params) {
     this.$el = el
@@ -9,17 +10,20 @@ class Backdrop {
   setTemplate() {
     let head = this.setHeader()
     let content = this.setContent()
-    let svgHeadBox = document.createElementNS('http://www.w3.org/2000/svg','svg');
-    svgHeadBox.setAttribute('id','kim-gantt-background')
-    svgHeadBox.setAttribute('class','kim-gantt-background')
-    svgHeadBox.style.height = this.boxHeight + 'px'
-    svgHeadBox.innerHTML = `
+    let container = document.createElementNS('http://www.w3.org/2000/svg','svg');
+    container.setAttribute('id','kim-gantt-background')
+    container.setAttribute('class','kim-gantt-background')
+    container.style.height = this.boxHeight + 'px'
+    // let boxg = d3.select(container).append('g').attr('transform',`translate(${-this.boxWidth}, 0)`).attr('class','kim-gantt-background-container')
+    // boxg.append('g').attr('transform',`translate(0, 0)`).attr('class','kim-gantt-background-header').html(head)
+    // boxg.append('g').attr('transform',`translate(0, ${this.topHeight * 2})`).attr('class','kim-gantt-content-subaxis').html(content)
+    container.innerHTML = `
                             <g transform="translate(${-this.boxWidth}, 0)" class="kim-gantt-background-container">
                               <g transform="translate(0, 0)" class="kim-gantt-background-header">${head}</g>
                               <g transform="translate(0, ${this.topHeight * 2})" class="kim-gantt-content-subaxis">${content}</g>
                             </g>
                             `
-    this.$el.appendChild(svgHeadBox)
+    this.$el.appendChild(container)
   }
   setHeader() {
     let arr = []

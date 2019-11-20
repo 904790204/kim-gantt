@@ -28,16 +28,60 @@ export default {
           {id:3, source:5, target:6, type:"0"}
         ]
       });
-      gantt.attachEvent("onTaskClick", function(id, e) {
-        console.log(e);
-        console.log(id);
-      });
+      this.$_initGanttEvents()
+      // gantt.attachEvent("onTaskClick", function(id, e) {
+      //   console.log(e);
+      //   console.log(id);
+      // });
 
-      gantt.attachEvent("onTaskClick", function(id, e) {
-        console.log(e);
-        console.log(id);
-      });
+      // gantt.attachEvent("onTaskClick", function(id, e) {
+      //   console.log(e);
+      //   console.log(id);
+      // });
     })
+  },
+  methods:{
+    $_initGanttEvents: function () {
+      if(gantt.$_eventsInitialized)
+        return;
+      gantt.attachEvent('onTaskSelected', (id) => {
+        console.log(id);
+        let task = gantt.getTask(id)
+        this.$emit('task-selected', task)
+      })
+      gantt.attachEvent('onAfterTaskAdd', (id, task) => {
+        console.log(id,task);
+        this.$emit('task-updated', id, 'inserted', task)
+        task.progress = task.progress || 0
+        if(gantt.getSelectedId() == id) {
+          this.$emit('task-selected', task)
+        }
+      })
+      gantt.attachEvent('onAfterTaskUpdate', (id, task) => {
+        console.log(id,task);
+        this.$emit('task-updated', id, 'updated', task)
+      })
+      gantt.attachEvent('onAfterTaskDelete', (id) => {
+        console.log(id);
+        this.$emit('task-updated', id, 'deleted')
+        if(!gantt.getSelectedId()) {
+          this.$emit('task-selected', null)
+        }
+      })
+      gantt.attachEvent('onAfterLinkAdd', (id, link) => {
+        console.log(id,link);
+        this.$emit('link-updated', id, 'inserted', link)
+      })
+      gantt.attachEvent('onAfterLinkUpdate', (id, link) => {
+        console.log(id,link);
+        this.$emit('link-updated', id, 'updated', link)
+      })
+      gantt.attachEvent('onAfterLinkDelete', (id, link) => {
+        console.log(id,link);
+        this.$emit('link-updated', id, 'deleted')
+      })
+      gantt.$_eventsInitialized = true;
+    }
   }
 }
 </script>
