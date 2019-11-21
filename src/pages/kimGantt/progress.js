@@ -4,22 +4,21 @@ class Progress {
   constructor(el,data,params,event) {
     this.$el = el
     this.$data = null
-    this.$event = event
+    this.callback = event
     this.list = []
     utils.proxyData(this,params)
     this.setTemplate(data)
   }
   setTemplate(data) {
-    let container = document.createElementNS('http://www.w3.org/2000/svg','svg');
-    container.setAttribute('id','kim-gantt-progress')
-    container.setAttribute('class','kim-gantt-progress')
-    container.style.height = this.boxHeight + 'px'
-    let box = d3.select(container)
-                .append('g')
+    // let container = document.createElementNS('http://www.w3.org/2000/svg','svg');
+    // container.setAttribute('id','kim-gantt-progress')
+    // container.setAttribute('class','kim-gantt-progress')
+    // container.style.height = this.boxHeight + 'px'
+    let box = this.$el.append('g')
                 .attr('transform',`translate(${-this.boxWidth}, ${this.topHeight * 2})`)
                 .attr('class','kim-gantt-progress-container')
     this.$data = this.toTree(data,box)
-    this.$el.appendChild(container)
+    // this.$el.appendChild(container)
   }
   toTree(data,box,pid){
     let arr = []
@@ -43,11 +42,12 @@ class Progress {
     })
     return arr
   }
-  onTaskSelected(el) {
-    this.$event.onTaskSelected && this.$event.onTaskSelected(el)
+  onTaskSelected(el,i) {
+    this.callback.onTaskSelected && this.callback.onTaskSelected(el)
   }
-  onTaskDrag(el) {
-    console.log(el)
+  onTaskDrag(el,i) {
+    console.log(el);
+    
   }
 }
 export default Progress

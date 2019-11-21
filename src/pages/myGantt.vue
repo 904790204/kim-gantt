@@ -1,5 +1,8 @@
 <template>
-<div>
+<div class="gantt">
+  <button>日</button>
+  <button>周</button>
+  <button>月</button>
   <div class="my-gantt" id="my-gantt">
 
   </div>

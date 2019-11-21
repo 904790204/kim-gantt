@@ -1,19 +1,32 @@
 import Backdrop from './backdrop'
 import Progress from './progress'
+import Event from './event'
 import utils from './utils'
+import * as d3 from "d3"
 import './index.css'
 class kimGantt {
   constructor(el,options){
     this.$el = document.querySelector(el)
     this.$data = options.data
-    this.$event = options.callback
+    this.callback = options.callback
     this.$params = {}
+    this.$event = new Event()
     this.init()
   }
   init() {
+    let container = d3.select(this.$el).append('svg')
+      .attr('id','kim-gantt')
+      .attr('class','kim-gantt')
+      .on('mousedown', this.$event.containerMouseDown)
+      .call(d3.drag().on("drag", this.$event.containerDrag))
+
     this.setParams()
-    this.setBackdrop()
-    this.setProgress()
+    this.setBackdrop(container)
+    this.setProgress(container)
+  }
+  dragged(_this){
+    
+    // _this.containerDrag(this)
   }
   setParams() {
     this.$params.itemWidth = 30
@@ -34,11 +47,11 @@ class kimGantt {
     this.$params.startDay = this.$params.middle.add(-this.$params.duration / 2, 'day')
     this.$params.endDay = this.$params.middle.add(this.$params.duration / 2, 'day')
   }
-  setBackdrop() {
-    new Backdrop(this.$el,this.$data,this.$params,this.$event)
+  setBackdrop(el) {
+    new Backdrop(el,this.$data,this.$params,this.callback)
   }
-  setProgress() {
-    new Progress(this.$el,this.$data,this.$params,this.$event)
+  setProgress(el) {
+    new Progress(el,this.$data,this.$params,this.callback)
   }
 }
 

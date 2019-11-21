@@ -1,7 +1,10 @@
-.kim-gantt-background{
+.kim-gantt{
   width: 100%;
   height: 100%;
   border: 1px solid #D2D1D1;
+}
+.kim-gantt-background{
+  height: 100%;
 }
 .kim-gantt-background-header rect{
   fill: #b6ddfb;
