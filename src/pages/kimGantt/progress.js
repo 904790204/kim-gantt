@@ -47,7 +47,6 @@ class Progress {
   }
   onTaskDrag(el,i) {
     console.log(el);
-    
   }
 }
 export default Progress

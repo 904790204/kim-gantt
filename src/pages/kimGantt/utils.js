@@ -47,6 +47,10 @@ const utils = {
     })
     return arr
   },
+  getTranslateX(value){
+    let x = parseFloat(value.match(/[^\(\)]+(?=\))/g))
+    return x
+  },
   dayjs
 }
 export default utils
