@@ -7,7 +7,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/jqueryGantt'
+      redirect: '/myGantt'
     },
     {
       path: '/dhtmlxGantt',
@@ -33,5 +33,23 @@ export default new Router({
         require(['../pages/myGantt.vue'], resolve)
       }
     },
+    {
+      path: '/sheet',
+      component (resolve) {
+        require(['../pages/sheet'], resolve)
+      }
+    },
+    {
+      path: '/task-gantt',
+      component (resolve) {
+        require(['../view/task-gantt/'], resolve)
+      }
+    },
+    {
+      path: '/task-list',
+      component (resolve) {
+        require(['../view/task-list/'], resolve)
+      }
+    }
   ]
 })
