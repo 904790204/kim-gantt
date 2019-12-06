@@ -50,6 +50,24 @@ export default new Router({
       component (resolve) {
         require(['../view/task-list/'], resolve)
       }
+    },
+    {
+      path: '/hotTable',
+      component (resolve) {
+        require(['../view/task-list/hotTable'], resolve)
+      }
+    },
+    {
+      path: '/excel',
+      component (resolve) {
+        require(['../view/task-list/excel'], resolve)
+      }
+    },
+    {
+      path: '/task-sheet',
+      component (resolve) {
+        require(['../view/task-sheet'], resolve)
+      }
     }
   ]
 })

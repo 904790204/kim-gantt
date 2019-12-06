@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import kimGantt from '../../components/kimGantt'
+import kimGantt from '../../assets/kimGantt'
 export default {
   props:['tasklist'],
   data() {
